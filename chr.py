@@ -9,7 +9,6 @@ import scrapy
 import requests
 from ChineseChr.items import ChinesechrItem
 import time
-import pandas as pd
 import os
 
 
@@ -42,11 +41,12 @@ class ChrSpider(scrapy.Spider):
             if 'urls.csv' not in os.listdir('/Users/Al_gou/Desktop/Scraped/'):
                 with open('/Users/Al_gou/Desktop/Scraped/urls.csv', 'w') as f:
                     f.write('')
-            parsedSet = pd.read_csv('/Users/Al_gou/Desktop/Scraped/urls.csv',
-                                    sep='\t',
-                                    names=['url', 'char'])
-            parsedSet = set(parsedSet.char)
-            
+            with open ('/Users/Al_gou/Desktop/Scraped/parsed.txt', 'r') as f:
+                parsedSet = f.read()
+                
+            with open ('/Users/Al_gou/Desktop/Scraped/nodata.txt', 'r') as f:
+                parsedSet += f.read()
+                                                
             if char not in parsedSet:
                 # Search each font for each character 
                 for font in fonts:
